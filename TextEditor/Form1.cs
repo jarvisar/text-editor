@@ -1,14 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace TextEditor
 {
@@ -24,14 +16,6 @@ namespace TextEditor
         {
             InitializeComponent();
             CreateMenuStrip();
-            CreateTextBox();
-        }
-
-        private void CreateTextBox()
-        {
-            textBox = new TextBox();
-            textBox.Dock = DockStyle.Fill;
-            this.Controls.Add(textBox);
         }
 
         private void CreateMenuStrip()
@@ -55,30 +39,34 @@ namespace TextEditor
             this.MainMenuStrip = menuStrip;
         }
 
-        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "Text files (*.txt)|*.txt";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                string fileName = openFileDialog1.FileName;
-                string fileText = File.ReadAllText(fileName);
-                textBox1.Text = fileText;
+                textBox1.Text = File.ReadAllText(openFileDialog1.FileName);
             }
         }
-
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "Text files (*.txt)|*.txt";
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                File.WriteAllText(saveFileDialog1.FileName, textBox.Text);
+                File.WriteAllText(saveFileDialog1.FileName, textBox1.Text);
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
+        {
+            MessageBox.Show("Form loaded!");
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
