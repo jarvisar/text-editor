@@ -8,17 +8,19 @@ namespace TextEditor
     public partial class Form1 : Form
     {
         private MenuStrip menuStrip;
+
         private ToolStripMenuItem fileToolStripMenuItem;
         private ToolStripMenuItem openToolStripMenuItem;
         private ToolStripMenuItem saveToolStripMenuItem;
         private ToolStripMenuItem fontToolStripMenuItem;
+
         private ToolStripMenuItem undoToolStripMenuItem;
         private ToolStripMenuItem redoToolStripMenuItem;
 
-        private Stack<string> undoStack = new Stack<string>();
-        private Stack<string> redoStack = new Stack<string>();
-
-        private TextBox textBox;
+        private ToolStripMenuItem editToolStripMenuItem;
+        private ToolStripMenuItem cutToolStripMenuItem;
+        private ToolStripMenuItem copyToolStripMenuItem;
+        private ToolStripMenuItem pasteToolStripMenuItem;
 
         public Form1()
         {
@@ -30,29 +32,47 @@ namespace TextEditor
         {
             menuStrip = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
+            editToolStripMenuItem = new ToolStripMenuItem();
             openToolStripMenuItem = new ToolStripMenuItem();
             saveToolStripMenuItem = new ToolStripMenuItem();
             fontToolStripMenuItem = new ToolStripMenuItem();
             undoToolStripMenuItem = new ToolStripMenuItem();
             redoToolStripMenuItem = new ToolStripMenuItem();
+            cutToolStripMenuItem = new ToolStripMenuItem();
+            copyToolStripMenuItem = new ToolStripMenuItem();
+            pasteToolStripMenuItem = new ToolStripMenuItem();
 
             fileToolStripMenuItem.Text = "File";
+            editToolStripMenuItem.Text = "Edit";
             openToolStripMenuItem.Text = "Open";
             saveToolStripMenuItem.Text = "Save";
             fontToolStripMenuItem.Text = "Font";
             undoToolStripMenuItem.Text = "Undo";
             redoToolStripMenuItem.Text = "Redo";
+            cutToolStripMenuItem.Text = "Cut";
+            copyToolStripMenuItem.Text = "Copy";
+            pasteToolStripMenuItem.Text = "Paste";
 
             openToolStripMenuItem.Click += new EventHandler(openToolStripMenuItem_Click);
             saveToolStripMenuItem.Click += new EventHandler(saveToolStripMenuItem_Click);
             fontToolStripMenuItem.Click += new EventHandler(fontToolStripMenuItem_Click);
             undoToolStripMenuItem.Click += new EventHandler(undoToolStripMenuItem_Click);
             redoToolStripMenuItem.Click += new EventHandler(redoToolStripMenuItem_Click);
+            cutToolStripMenuItem.Click += new EventHandler(cutToolStripMenuItem_Click);
+            copyToolStripMenuItem.Click += new EventHandler(copyToolStripMenuItem_Click);
+            pasteToolStripMenuItem.Click += new EventHandler(pasteToolStripMenuItem_Click);
+
+            cutToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.X;
+            copyToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.C;
+            pasteToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.V;
 
             undoToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Z;
             redoToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Y;
 
             fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { openToolStripMenuItem, saveToolStripMenuItem });
+            editToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cutToolStripMenuItem, copyToolStripMenuItem, pasteToolStripMenuItem });
+
+            menuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, editToolStripMenuItem });
             menuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, undoToolStripMenuItem, redoToolStripMenuItem });
 
             menuStrip.Items.Add(fontToolStripMenuItem);
@@ -103,17 +123,27 @@ namespace TextEditor
             richTextBox1.Redo();
         }
 
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Cut();
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Copy();
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Paste();
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void richrichTextBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
